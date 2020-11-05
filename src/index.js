@@ -11,7 +11,6 @@ function fetchDogs(){
             dogArray.push(dog)
         })
         renderDogs(dogArray)
-    
     })
 }
 
@@ -25,7 +24,6 @@ function renderDog(d){
     const tr = document.createElement("tr")
     tr.innerHTML = `<td>${d.name}</td> <td>${d.breed}</td> <td>${d.sex}</td> <td><button data-id=${d.id}>Edit Dog</button></td>`
 
-
     tableBody.appendChild(tr)
 }
 
@@ -34,6 +32,7 @@ function editListener(){
         if (event.target.tagName === 'BUTTON'){
             const editDog = dogArray.find(dog => dog.id == event.target.dataset.id)
 
+            form['id'].value = editDog.id
             form['name'].value = editDog.name
             form['breed'].value = editDog.breed
             form['sex'].value = editDog.sex
@@ -60,20 +59,17 @@ function editDog(event){
             sex: form['sex'].value
         })
     }
+    form.reset()
 
-    const doggoID = dogArray.find(dog => dog.name == form['name'].value).id
-
-    fetch(`${URL}${doggoID}`, configDog)
+    fetch(`${URL}/${form['id'].value}`, configDog)
     .then(resp => resp.json())
     .then(json => updateDog(json))
-
 }
 
 function updateDog(d){
     const dogRow = tableBody.children[d.id-1]
 
     dogRow.innerHTML = `<td>${d.name}</td> <td>${d.breed}</td> <td>${d.sex}</td> <td><button data-id=${d.id}>Edit Dog</button></td>`
-
 }
 
 function main(){
@@ -82,6 +78,5 @@ function main(){
     formListener()
 
 }
-{/* <tr><td>Dog *Name*</td> <td>*Dog Breed*</td> <td>*Dog Sex*</td> <td><button>Edit</button></td></tr> */}
 
 main()

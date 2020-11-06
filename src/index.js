@@ -27,6 +27,7 @@ function renderDog(d){
     tableBody.appendChild(tr)
 }
 
+
 function editListener(){
     document.addEventListener("click", event => {
         if (event.target.tagName === 'BUTTON'){
@@ -78,5 +79,6 @@ function main(){
     formListener()
 
 }
+
 
 main()
